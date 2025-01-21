@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Progreso3V.Models;
 
 namespace Progreso3V.Controllers
 {

@@ -1,4 +1,4 @@
-namespace Progreso3V
+namespace Progreso3V.Models
 {
     public class WeatherForecast
     {
