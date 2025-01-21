@@ -1,0 +1,6 @@
+@Progreso3V_HostAddress = http://localhost:5265
+
+GET {{Progreso3V_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
