@@ -2,7 +2,7 @@
 
 namespace Progreso3V.Models
 {
-    public class MovieModels
+    public class MovieAPIModels
     {
         [PrimaryKey, AutoIncrement]
         public int id { get; set; }

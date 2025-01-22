@@ -3,10 +3,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Progreso3V.Interfaces;
 
 namespace Progreso3V.Repositories
 {
-    public class MovieRepository
+    public class MovieAPIRepository :IMovieRepository
     {
         public async Task<string> DevuelveRespuestaAPI(string pelicula)
         {
@@ -23,7 +24,7 @@ namespace Progreso3V.Repositories
 
                     string jsonResponse = await response.Content.ReadAsStringAsync();
 
-                    Models.MovieModels movie = JsonConvert.DeserializeObject<Models.MovieModels>(jsonResponse);
+                    Models.MovieAPIModels movie = JsonConvert.DeserializeObject<Models.MovieAPIModels>(jsonResponse);
 
                     var resultado = new
                     {
@@ -44,5 +45,5 @@ namespace Progreso3V.Repositories
             }
         }
     }
+}
 
-   
