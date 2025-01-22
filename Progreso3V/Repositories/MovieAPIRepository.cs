@@ -28,7 +28,7 @@ namespace Progreso3V.Repositories
                         return "Error: No se encontró la película.";
                     }
 
-                    var movie = movies[0]; // Tomar la primera película de la lista
+                    var movie = movies[0]; 
 
                     var resultado = new
                     {
