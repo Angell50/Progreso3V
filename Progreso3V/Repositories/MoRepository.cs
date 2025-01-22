@@ -1,44 +1,48 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Progreso3V.Interfaces;
-using Progreso3V.Models;
+﻿using System;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Progreso3V.Repositories
 {
-    public class MoRepository : IMovieRepository
-
+    public class MovieRepository
     {
         public async Task<string> DevuelveRespuestaAPI(string pelicula)
         {
-            string jsonData = JsonConvert.SerializeObject(pelicula);
             string url = $"https://api.example.com/movies/{pelicula}";
 
             using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    var stringContent = new StringContent(pelicula, Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await client.PostAsync(url);
-                    response.EnsureSuccessStatusCode(); 
+                    var stringContent = new StringContent(string.Empty, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync(url, stringContent);
+                    response.EnsureSuccessStatusCode();
 
                     string jsonResponse = await response.Content.ReadAsStringAsync();
 
- 
-                    MovieModels movie = JsonConvert.DeserializeObject<MovieModels>(jsonResponse);
+                    Models.MovieModels movie = JsonConvert.DeserializeObject<Models.MovieModels>(jsonResponse);
 
-                    Console.WriteLine($"Título de la película: {movie.title}");
-                    Console.WriteLine($"Género (1er registro): {movie.genre}");
-                    Console.WriteLine($"Actor principal (1er registro): {movie.actors}");
-                    Console.WriteLine($"Premios: {movie.awards}");
-                    Console.WriteLine($"Website: {movie.website}");
+                    var resultado = new
+                    {
+                        Titulo = movie.title,
+                        Genero = movie.genre?[0],
+                        ActorPrincipal = movie.actors?[0],
+                        Premios = movie.awards,
+                        Website = movie.website,
+                        Nombre = "AVela"
+                    };
 
-                    return JsonConvert.SerializeObject(movie);
+                    return JsonConvert.SerializeObject(resultado);
                 }
                 catch (Exception ex)
                 {
-                    return "No se encontró ninguna película" + ex;
+                    return $"Error: No se encontró la película. Detalles: {ex.Message}";
                 }
             }
         }
     }
-}
+
+   
